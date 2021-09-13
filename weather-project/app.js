@@ -2,7 +2,8 @@ const express= require("express");
 const app= express();
 const https = require("https");
 const bodyParser= require("body-parser")
-const url="api.openweathermap.org/data/2.5/weather?appid=1fb983b6369771bcf24719d764f7757e&q=";
+const url="api.openweathermap.org/data/2.5/weather?q=";
+const appid="&appid=f34cc5af67261a3596c2221502246a9b";
 
 const rest_url= "&units=metric";
 
@@ -15,7 +16,7 @@ app.get("/",function(req,res){
 app.post("/",function(req,res){
   const city= req.body.city;
   console.log(city);
-  const urlfinal= "https:\\"+url+`${city}`+ rest_url;
+  const urlfinal= "https:\\"+url+`${city}`+appid+ rest_url;
 
   https.get(urlfinal,function(response){
       console.log(response.statuscode);
