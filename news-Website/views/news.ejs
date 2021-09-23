@@ -1,0 +1,20 @@
+<%- include("header") %>
+
+
+    <div class="news-title">
+        <h1 class="headline">
+            <%=news.name %>
+        </h1>
+    </div>
+    <div class="news">
+        <div class="img"><img width="500px" height="300px" src="data:image/<%=news.img.contentType%>;base64,
+            <%=news.img.data.toString('base64')%>"> </div>
+
+        <div class="news-content">
+            <p>
+                <%=news.desc %>
+            </p>
+        </div>
+    </div>
+
+    <%- include("footer") %>
