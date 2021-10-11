@@ -130,6 +130,11 @@ app.get("/about", function(req, res){
   res.render("about");
 });
 
-app.listen(3000, function() {
-  console.log("Server started on port 3000");
+
+app.get("/print/jaishreeram",(req,res)=>{
+  res.render('exper',{});
+})
+
+app.listen(8080, function() {
+  console.log("Server started on port 8080");
 });
