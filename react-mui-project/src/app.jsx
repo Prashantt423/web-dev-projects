@@ -5,7 +5,7 @@ const baseURL =
   "https://7946a218-d225-4d0e-80ac-450bbc9713a0.mock.pstmn.io/booking";
 const useStyles = makeStyles((theme) => ({
   heading: {
-    margin: "1% 0px 0px 5%",
+    margin: "4% 0px 0px 5%",
     fontFamily: "brandon-grotesque"
   },
   container: {
@@ -14,9 +14,6 @@ const useStyles = makeStyles((theme) => ({
     width: "90%",
     boxShadow: "0 0 20px rgba(0, 0, 0, 0.05), 0 0px 40px rgba(0, 0, 0, 0.08)",
     borderRadius: "5px"
-  },
-  card: {
-    width: "80%"
   }
 }));
 
@@ -38,8 +35,9 @@ function App() {
       {data && (
         <div>
           {data.policies.map((item, index) => (
-            <div className={classes.container}>
+            <div key={index} className={classes.container}>
               <Card
+                
                 img={item.partner.logo}
                 title={item.title}
                 description={item.description}

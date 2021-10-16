@@ -273,6 +273,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "5px",
     width: "100%",
     minWidth: "4rem"
+  },
+  wrapper: {
+    transition: "300ms linear all"
   }
 }));
 
@@ -288,7 +291,7 @@ function Card(props) {
   const end = props.coverage_end;
 
   return (
-    <div className={classes.wrapper}>
+    <div onClick={handleClick} className={classes.wrapper}>
       {/* desktop and tab view */}
       <div className={classes.contentWrapper}>
         <div className={classes.contentBox}>
@@ -297,7 +300,6 @@ function Card(props) {
               className={
                 isClicked ? classes.chavIconactive : classes.chavIconinactive
               }
-              onClick={handleClick}
             >
               <ChevronRightIcon />
             </div>
