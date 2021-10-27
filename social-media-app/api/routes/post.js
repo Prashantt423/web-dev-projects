@@ -1,7 +1,7 @@
 import Routers from 'express'
 import Post from '../models/posts.js'
 import User from '../models/users.js'
-import fetch from 'node-fetch'
+
 
 const router = Routers.Router();
 
