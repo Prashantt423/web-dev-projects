@@ -155,6 +155,7 @@ const useStyles = makeStyles((theme) => ({
     border: "none",
     height: "1px",
     backgroundColor: "#acacac",
+    width: "100%",
     [theme.breakpoints.up("sm") && theme.breakpoints.down("md")]: {
       width: "126%"
     }
@@ -254,6 +255,40 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "bitter",
     fontSize: "7px",
     fontWeight: "light"
+  },
+  definition: {
+    fontSize: "14px"
+  },
+  coverage: {
+    display: "flex",
+    minWidth: "12rem",
+    justifyContent: "space-between",
+    fontSize: "14px"
+  },
+  coverageMob: {
+    display: "flex",
+    justifyContent: "space-between",
+    fontFamily: "bitter",
+    fontSize: "7px",
+    marginLeft: "5px",
+    width: "100%",
+    minWidth: "4rem"
+  },
+  wrapperHovered: {
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.09), 0 0px 10px rgba(0, 0, 0, 0.1)",
+    borderRadius: "5px",
+    transition: " 300ms linear all",
+    height: "100.1%",
+    width: "100%"
+  },
+  ".wrapper:focus-within": {
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.09), 0 0px 10px rgba(0, 0, 0, 0.1)",
+    borderRadius: "5px",
+    transition: " 300ms linear all",
+    height: "100.1%"
+  },
+  wrapper: {
+    transition: "300ms linear all"
   }
 }));
 
@@ -265,11 +300,16 @@ function Card(props) {
   const classes = useStyles();
   const dateNum = props.date.split("T");
   const dateWord = dateInWord(dateNum[0]);
-  const start = props.coverage_start;
-  const end = props.coverage_end;
+  var end;
+  const start = dateInWord(props.coverage_start);
+  if (props.coverage_end) {
+    end = dateInWord(props.coverage_end);
+  } else {
+    end = null;
+  }
 
   return (
-    <div className={classes.wrapper}>
+    <div onClick={handleClick} className={classes.wrapper}>
       {/* desktop and tab view */}
       <div className={classes.contentWrapper}>
         <div className={classes.contentBox}>
@@ -278,7 +318,6 @@ function Card(props) {
               className={
                 isClicked ? classes.chavIconactive : classes.chavIconinactive
               }
-              onClick={handleClick}
             >
               <ChevronRightIcon />
             </div>
@@ -325,9 +364,7 @@ function Card(props) {
           <div className={classes.lowerhalfCard}>
             <div className={classes.paymentDate}>
               <div className={classes.contentText}>{dateWord}</div>
-              <div classname={classes.definition} style={{ fontSize: "14px" }}>
-                Payment date
-              </div>
+              <div className={classes.definition}>Payment date</div>
             </div>
 
             <div className={classes.vl}></div>
@@ -336,14 +373,7 @@ function Card(props) {
                 <div className={classes.contentText}>
                   {start} to {end}
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    minWidth: "12rem",
-                    justifyContent: "space-between",
-                    fontSize: "14px"
-                  }}
-                >
+                <div className={classes.coverage}>
                   Coverage dates{" "}
                   {props.status === "active" ? <Active /> : <Expired />}
                 </div>
@@ -352,15 +382,13 @@ function Card(props) {
             <div className={classes.vl}></div>
             <div className={classes.price}>
               <div className={classes.contentText}>{props.premium}</div>
-              <div classname={classes.definition} style={{ fontSize: "14px" }}>
-                Price/Premium
-              </div>
+              <div className={classes.definition}>Price/Premium</div>
             </div>
             {props.renewal ? <div className={classes.vl}></div> : null}
             {props.renewal ? (
               <div className={classes.renewal}>
                 <div className={classes.contentText}>{props.renewal}</div>
-                <div style={{ fontSize: "14px" }}>Renewal</div>
+                <div className={classes.definition}>Renewal</div>
               </div>
             ) : null}
           </div>
@@ -382,16 +410,7 @@ function Card(props) {
             <div className={classes.contentTextMobile}>
               {start} to {end}
             </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                fontFamily: "bitter",
-                fontSize: "7px",
-                marginLeft: "5px",
-                width: "100%"
-              }}
-            >
+            <div className={classes.coverageMob}>
               Coverage dates
               {props.status === "active" ? <ActiveMob /> : <ExpiredMob />}
             </div>

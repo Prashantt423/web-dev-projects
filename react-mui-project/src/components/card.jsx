@@ -274,6 +274,19 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     minWidth: "4rem"
   },
+  wrapperHovered: {
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.09), 0 0px 10px rgba(0, 0, 0, 0.1)",
+    borderRadius: "5px",
+    transition: " 300ms linear all",
+    height: "100.1%",
+    width: "100%"
+  },
+  ".wrapper:focus-within": {
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.09), 0 0px 10px rgba(0, 0, 0, 0.1)",
+    borderRadius: "5px",
+    transition: " 300ms linear all",
+    height: "100.1%"
+  },
   wrapper: {
     transition: "300ms linear all"
   }
@@ -287,8 +300,13 @@ function Card(props) {
   const classes = useStyles();
   const dateNum = props.date.split("T");
   const dateWord = dateInWord(dateNum[0]);
-  const start = props.coverage_start;
-  const end = props.coverage_end;
+  var end;
+  const start = dateInWord(props.coverage_start);
+  if (props.coverage_end) {
+    end = dateInWord(props.coverage_end);
+  } else {
+    end = null;
+  }
 
   return (
     <div onClick={handleClick} className={classes.wrapper}>
@@ -364,9 +382,7 @@ function Card(props) {
             <div className={classes.vl}></div>
             <div className={classes.price}>
               <div className={classes.contentText}>{props.premium}</div>
-              <div className={classes.definition} style={{ fontSize: "14px" }}>
-                Price/Premium
-              </div>
+              <div className={classes.definition}>Price/Premium</div>
             </div>
             {props.renewal ? <div className={classes.vl}></div> : null}
             {props.renewal ? (
