@@ -1,9 +1,9 @@
 import Routers from 'express'
 import Post from '../models/posts.js'
-import User  from '../models/users.js'
+import User from '../models/users.js'
 import fetch from 'node-fetch'
 
-const router= Routers.Router();
+const router = Routers.Router();
 
 // Create a post
 router.post("/", async (req, res) => {
@@ -96,7 +96,7 @@ router.get("/timeline/:userId", async (req, res) => {
         const postIds = user.posts
         const posts = await Promise.all(postIds.map(async function (id) {
             return await Post.findById(id)
-    
+
         }))
 
         res.status(200).json(posts)
@@ -110,22 +110,21 @@ router.get("/timeline/:userId", async (req, res) => {
 router.get("/feed/:userId", async (req, res) => {
     try {
         const user = await User.findById(req.params.userId)
-        if (user) {
-            const baseUrl="http://127.0.0.1:8800/api/post/timeline/"
-            const followers = user.followers;
-            const following = user.following;
+        const followers = user.followers;
+        const following = user.following;
+        let result = []
+        const people = [...new Set([...followers, ...following])]
+        await Promise.all(people.map(async (peopleId) => {
 
-            const followerPosts = await Promise.all(followers.map(async (followId) => {
-                return await fetch(baseUrl+followId).json()
-            }))
-            const followingPosts = await Promise.all(following.map(async (followingId) => {
-                return await fetch(baseUrl+followingId).json()
-            }))
-           
-            res.status(200).json(followerPosts)
-        } else {
-            res.status(500).json("Invalid user id")
-        }
+            const data = await Post.find({ "userId": peopleId })
+            result.push(...data)
+
+
+        }))
+
+
+        res.status(200).json(result);
+
     } catch (e) {
         res.status(500).json(e)
     }
