@@ -105,6 +105,15 @@ router.get("/timeline/:userId", async (req, res) => {
         res.status(500).json(e)
     }
 });
+// Get timeline posts of any user by USERNAME
+router.get("/timeline/:username", async (req, res) => {
+    try {
+    const result = await Post.findAll({"username":req.params.username})
+    res.status(200).json(result);
+    } catch (e) {
+        res.status(500).json(e)
+    }
+});
 
 // News Feed of the user
 router.get("/feed/:userId", async (req, res) => {
@@ -118,11 +127,7 @@ router.get("/feed/:userId", async (req, res) => {
 
             const data = await Post.find({ "userId": peopleId })
             result.push(...data)
-
-
         }))
-
-
         res.status(200).json(result);
 
     } catch (e) {

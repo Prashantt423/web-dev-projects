@@ -81,3 +81,9 @@
     object-fit: cover;
     border-radius: 5px;
   }
+
+  @media (max-width: 600px) {
+    .rightBarBox{
+      display: none;
+    }
+  }

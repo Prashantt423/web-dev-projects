@@ -6,7 +6,7 @@ export default function Rightbar({ profile }) {
     const PF= process.env.REACT_APP_PUBLIC_FOLDER
   const HomeRightbar = () => {
     return (
-      <>
+      <div className="rightBarBox">
         <div className="birthdayContainer">
           <img className="birthdayImg" src={PF+"gift.png"} alt="" />
           <span className="birthdayText">
@@ -20,7 +20,7 @@ export default function Rightbar({ profile }) {
             <Online key={u.id} user={u} />
           ))}
         </ul>
-      </>
+      </div>
     );
   };
 

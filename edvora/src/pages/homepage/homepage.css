@@ -1,0 +1,13 @@
+.homepage{
+    display: flex;
+    background: var( --theme-light-color);
+    color: white;
+    height: 100%;
+    width: 100%;
+}
+.homepage > .leftBar{
+    flex: 1 1 0;
+}
+.homepage > .main{
+    flex: 4 1 0;
+}

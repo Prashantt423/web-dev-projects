@@ -1,0 +1,42 @@
+.left-box{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    background: var(--theme-dark-color);
+    color: grey;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 0;
+    border-radius :5px;
+    margin:25px;
+    padding: 15px 0 15px 0;
+}
+.left-bar-box{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center
+}
+
+.left-bar-box1{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    margin: 1em auto 0.5em 3.5em
+    
+}
+.head > p{
+    margin-bottom: 0.5em;
+}
+hr.style-one {
+    border: 0;
+    height: 1px;
+    background: grey;
+    width: 150px;
+    margin-bottom: 2em;
+    
+}
+.MuiSelect-icon{
+    color: white
+}

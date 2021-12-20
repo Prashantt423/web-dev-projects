@@ -9,9 +9,15 @@ const PostSchema = new mongoose.Schema({
        type: String,
        max:500
    },
-   img:{
-       type: String
+   username:{
+       type: String,
+       required: true,
+       unique:true
    },
+   img:{
+    type: String,
+    required: true
+    },
    likes:{
        type: Array,
        default:[]
