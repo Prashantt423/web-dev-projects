@@ -1,14 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Leftbar from "../../components/leftbar/leftbar"
 import Main from "../../components/main/main"
+import axios from "axios"
 import "./homepage.css"
 export default function Homepage() {
-    return (
-      <>
-        <div className="homepage">
-          <Leftbar/>
-          <Main />
-        </div>
-      </>
-    )
+const [data,setData]=useState()
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get("https://assessment-edvora.herokuapp.com/")
+        setData(res.data)
+
+    };
+    fetchData();
+   
+  },[setData])
+  data&& console.log(data)
+  return (
+    <>
+      <div className="homepage">
+        <Leftbar Data={data } />
+        <Main Data={data}/>
+      </div>
+    </>
+  )
 }
