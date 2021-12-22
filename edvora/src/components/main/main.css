@@ -1,22 +1,9 @@
-.product{
-    display: flex;
-    background: var(--theme-dark-color);
-    margin-bottom:20px;
-    justify-content:space-evenly;
-    padding:20px 5px 20px 5px;
-    width:100%;
-    border-radius: 10px;
-    overflow-x: scroll;
+.carouselBox{
+   background-color: var(--theme-dark-color);
+   padding:0 10px 0 10px;
 }
-.product > div{
-    min-width:250px;
-    min-height:130px;
-    /* margin:15px 7.5px 15px 7.5px; */
-}
-.product > div:hover{
-    transform: scale(1.2);
-    transition: cubic-bezier(0.165, 0.84, 0.44, 1) 0.8s;
-}
+
+
 .content-box{
     width:100%;
 }

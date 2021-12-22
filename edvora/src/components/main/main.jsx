@@ -2,6 +2,13 @@ import React, { useEffect, useState } from 'react'
 import Item from "../../components/cards/items/items"
 import "./main.css"
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Carousel from "react-elastic-carousel";
+const breakPoints = [
+    { width: 1, itemsToShow: 1 },
+    { width: 550, itemsToShow: 2, itemsToScroll: 2 },
+    { width: 768, itemsToShow: 3 },
+    { width: 1200, itemsToShow: 4 }
+  ];
 export default function Main(props) {
     const [groupedData, setGroupedData] = useState([])
     let d_arr = []
@@ -63,7 +70,9 @@ export default function Main(props) {
                                         <p>{d}</p>
                                         <hr className="full-line"></hr></div>
                                 </div>
-                                <div className="product">
+                                <Carousel 
+                                 className="carouselBox"
+                                 breakPoints={breakPoints}>
                                     {
                                         data_arr[i] && data_arr[i].map((data, index) => {
                                             return (
@@ -74,13 +83,7 @@ export default function Main(props) {
                                             )
                                         })
                                     }
-                                </div>
-                            </div>
-                            <div className="icon">
-                                <ChevronRightIcon
-                                    fontSize="small"
-                                    sx={{ margin: "0 10px 0 10px", transform: "scale(2.5)" }}
-                                />
+                                </Carousel>
                             </div>
                         </div>
                     )
