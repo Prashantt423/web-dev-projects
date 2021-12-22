@@ -5,6 +5,11 @@ import axios from "axios"
 import "./homepage.css"
 export default function Homepage() {
 const [data,setData]=useState()
+const [filterBy,setFilterBy] = useState({
+  product:"",
+  state:"",
+  city:""
+})
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get("https://assessment-edvora.herokuapp.com/")
@@ -14,12 +19,20 @@ const [data,setData]=useState()
     fetchData();
    
   },[setData])
-  data&& console.log(data)
+  console.log(filterBy)
+  data && console.log(data)
   return (
     <>
       <div className="homepage">
-        <Leftbar Data={data } />
-        <Main Data={data}/>
+        <Leftbar 
+        setFilterBy={setFilterBy}
+        filterObj={filterBy}
+        Data={data} />
+        <Main 
+        Data={data}
+        FilterParams={filterBy}
+        
+        />
       </div>
     </>
   )

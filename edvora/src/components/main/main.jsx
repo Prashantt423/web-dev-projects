@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Item from "../../components/cards/items/items"
 import "./main.css"
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Carousel from "react-elastic-carousel";
 const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2, itemsToScroll: 2 },
     { width: 768, itemsToShow: 3 },
     { width: 1200, itemsToShow: 4 }
-  ];
+];
 export default function Main(props) {
     const [groupedData, setGroupedData] = useState([])
+
     let d_arr = []
     let data_arr = []
     useEffect(() => {
@@ -53,8 +53,7 @@ export default function Main(props) {
         }
 
     }
-    console.log(d_arr)
-    console.log(data_arr)
+
 
     return (
         <div className="main">
@@ -70,11 +69,18 @@ export default function Main(props) {
                                         <p>{d}</p>
                                         <hr className="full-line"></hr></div>
                                 </div>
-                                <Carousel 
-                                 className="carouselBox"
-                                 breakPoints={breakPoints}>
+                                <Carousel
+                                    className="carouselBox"
+                                    breakPoints={breakPoints}>
                                     {
-                                        data_arr[i] && data_arr[i].map((data, index) => {
+                                        data_arr[i] && data_arr[i].filter((val) => {
+                                            if (props.FilterParams.product === "" && props.FilterParams.state === "" && props.FilterParams.city === "")
+                                                return val;
+                                            else if (val.product_name.includes(props.FilterParams.product) &&
+                                                val.address.state.includes(props.FilterParams.state) &&
+                                                val.address.city.includes(props.FilterParams.city))
+                                                return val;
+                                        }).map((data, index) => {
                                             return (
                                                 <Item
                                                     d={data}
