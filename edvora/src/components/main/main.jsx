@@ -17,7 +17,7 @@ export default function Main(props) {
         async function groupBy(list, keyGetter) {
             try {
                 const map = new Map();
-                list.forEach((item) => {
+                list &&list.forEach((item) => {
                     const key = keyGetter(item);
                     const collection = map.get(key);
                     if (!collection) {

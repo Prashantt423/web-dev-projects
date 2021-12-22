@@ -52,7 +52,7 @@ export default function Leftbar(props) {
         async function groupBy(list, keyGetter) {
             try {
                 const map = new Map();
-                list.forEach((item) => {
+                list && list.forEach((item) => {
                     const key = keyGetter(item);
                     const collection = map.get(key);
                     if (!collection) {
@@ -140,7 +140,7 @@ export default function Leftbar(props) {
                             onChange={handleChange1}
                             displayEmpty
                             inputProps={{ 'aria-label': 'Without label' }}
-                            autoWidth={false}
+                            
                         >
                             <MenuItem value="">
                                 <em>Products</em>
@@ -169,7 +169,7 @@ export default function Leftbar(props) {
                             onChange={handleChange2}
                             displayEmpty
                             inputProps={{ 'aria-label': 'Without label' }}
-                            autosize={false}
+                            
                         >
                             <MenuItem value="">
                                 <em>State</em>
