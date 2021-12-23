@@ -132,14 +132,17 @@ export default function Leftbar(props) {
                 </div>
 
                 <div className="left-bar-box">
-                    <FormControl sx={{ m: 1, minWidth: 150, backgroundColor: "#292929", borderRadius: "4px" }}>
+                    <FormControl 
+                        className="form-box"
+                        sx={{ m: 1, minWidth: 150, backgroundColor: "#292929", borderRadius: "4px" }}>
                         <Select
-                            sx={{ color: "white", fontSize: "15px", width: "200px" }}
+                            sx={{ color: "white", fontSize: "15px", width: "17vw" }}
                             value={products}
                             onChange={handleChange1}
                             displayEmpty
                             inputProps={{ 'aria-label': 'Without label' }}
-                            
+                            className="select"
+
                         >
                             <MenuItem value="">
                                 <em>Products</em>
@@ -161,20 +164,23 @@ export default function Leftbar(props) {
                     </FormControl>
                 </div>
                 <div className="left-bar-box">
-                    <FormControl sx={{ m: 1, minWidth: 150, backgroundColor: "#292929", borderRadius: "4px", overflow: "hidden" }}>
+                    <FormControl 
+                        className="form-box"
+                        sx={{ m: 1, minWidth: 150, backgroundColor: "#292929", borderRadius: "4px", overflow: "hidden" }}>
                         <Select
-                            sx={{ color: "white", fontSize: "15px", width: "200px" }}
+                            sx={{ color: "white", fontSize: "15px", width: "17vw" }}
                             value={state}
                             onChange={handleChange2}
                             displayEmpty
                             inputProps={{ 'aria-label': 'Without label' }}
-                            
+                            className="select"
+
                         >
                             <MenuItem value="">
                                 <em>State</em>
                             </MenuItem>
                             {
-                                s_arr && s_arr.filter(v => props.Data.some(p => p.address.state===v && p.product_name.includes(props.filterObj.product) && p.address.city.includes(props.filterObj.city))).map((data, index) => {
+                                s_arr && s_arr.filter(v => props.Data.some(p => p.address.state === v && p.product_name.includes(props.filterObj.product) && p.address.city.includes(props.filterObj.city))).map((data, index) => {
                                     return (
                                         <MenuItem
                                             key={index}
@@ -188,19 +194,23 @@ export default function Leftbar(props) {
                     </FormControl>
                 </div>
                 <div className="left-bar-box">
-                    <FormControl sx={{ m: 1, minWidth: 150, backgroundColor: "#292929", borderRadius: "4px" }}>
+                    <FormControl
+                        className="form-box"
+                         sx={{ m: 1, minWidth: 150, backgroundColor: "#292929", borderRadius: "4px" }}>
                         <Select
-                            sx={{ color: "white", fontSize: "15px", width: "200px" }}
+                            sx={{ color: "white", fontSize: "15px", width: "17vw" }}
                             value={city}
                             onChange={handleChange3}
                             displayEmpty
                             inputProps={{ 'aria-label': 'Without label' }}
+                            className="select"
+
                         >
                             <MenuItem value="">
                                 <em>City</em>
                             </MenuItem>
                             {
-                                c_arr && c_arr.filter(v=>props.Data.some(p =>p.address.city===v && p.address.state.includes(props.filterObj.state) && p.product_name.includes(props.filterObj.product) )).map((data, index) => {
+                                c_arr && c_arr.filter(v => props.Data.some(p => p.address.city === v && p.address.state.includes(props.filterObj.state) && p.product_name.includes(props.filterObj.product))).map((data, index) => {
                                     return (
                                         <MenuItem
                                             key={index}

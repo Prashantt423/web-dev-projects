@@ -9,7 +9,8 @@
     align-items: center;
     flex: 1 1 0;
     border-radius :5px;
-    margin:25px;
+    margin-right:25px;
+    margin-bottom:25px;
     padding: 15px 0 15px 0;
 }
 .left-bar-box{
@@ -18,7 +19,9 @@
     justify-content: center;
     align-items: center
 }
-
+.select{
+    width: 100%;
+}
 .left-bar-box1{
     display: flex;
     flex-direction: column;
@@ -39,4 +42,13 @@ hr.style-one {
 }
 .MuiSelect-icon{
     color: white
+}
+
+@media screen and (max-width:600px){
+    .form-box{
+        width: 100%;
+    }
+    .left-box{
+        height:15vh
+    }
 }

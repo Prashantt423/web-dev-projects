@@ -24,15 +24,18 @@ const [filterBy,setFilterBy] = useState({
     <>
       <div className="homepage">
         <Leftbar 
-        setFilterBy={setFilterBy}
-        filterObj={filterBy}
-        Data={data} />
+          className="leftBar"
+          setFilterBy={setFilterBy}
+          filterObj={filterBy}
+          Data={data} />
         <Main 
-        Data={data}
-        FilterParams={filterBy}
-        
+          className="main"
+          Data={data}
+          FilterParams={filterBy}
+          
         />
       </div>
     </>
+   
   )
 }
