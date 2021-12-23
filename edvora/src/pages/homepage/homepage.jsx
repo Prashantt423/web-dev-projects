@@ -19,8 +19,7 @@ const [filterBy,setFilterBy] = useState({
     fetchData();
    
   },[setData])
-  console.log(filterBy)
-  data && console.log(data)
+
   return (
     <>
       <div className="homepage">

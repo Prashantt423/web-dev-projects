@@ -62,7 +62,9 @@ export default function Main(props) {
             {
                 d_arr && d_arr.map((d, i) => {
                     return (
-                        <div className="item-box">
+                        <div className="item-box"
+                        key={i}
+                        >
                             <div className="content-box">
                                 <div className="spec">
                                     <div className="p-name">
@@ -70,6 +72,7 @@ export default function Main(props) {
                                         <hr className="full-line"></hr></div>
                                 </div>
                                 <Carousel
+                                    pagination={false}
                                     className="carouselBox"
                                     breakPoints={breakPoints}>
                                     {

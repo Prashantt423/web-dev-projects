@@ -121,7 +121,6 @@ export default function Leftbar(props) {
 
     }
 
-    console.log(s_arr)
 
     return (
         <StyledEngineProvider injectFirst>

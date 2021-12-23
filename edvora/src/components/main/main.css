@@ -1,7 +1,12 @@
 .carouselBox{
    background-color: var(--theme-dark-color);
-   padding:0 10px 0 10px;
+   min-height:150px;
+   border-radius:10px;
+   width:95% !important;
+   padding-right:10px;
+   padding-left:10px;
 }
+
 
 
 .content-box{
@@ -27,3 +32,29 @@
     display:flex;
     align-items:center;
 }
+
+.rec.rec-arrow{
+    background: none;
+    border: 0;
+    box-shadow: none;
+    color: white;
+    font-weight:lighter;
+    font-size:2em;
+     font-family:'Courier New', Courier, monospace;
+     position: absolute;
+     right: 0
+}
+.rec.rec-arrow-left{
+    display:none
+}
+.rec.rec-arrow:focus {
+    border-radius: 0;
+    background: none !important;
+    box-shadow: none !important;
+}
+.rec.rec-arrow:hover {
+    border-radius: 0;
+    background: none !important;
+    box-shadow: none !important;
+}
+
