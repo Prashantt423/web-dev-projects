@@ -44,14 +44,10 @@ export default function Topbar() {
           </div>
         </div>
         <Link
-          to={user && `/profile/${user.username}`}
+          to={`/profile/${user.username}`}
           style={{ textDecoration: "none" }}
         >
-          <img
-            src={user ? PF + user.profilePic : PF + "/person/1.jpeg"}
-            alt=""
-            className="topbarImg"
-          />
+          <img src={PF + "/person/2.jpeg"} alt="" className="topbarImg" />
         </Link>
       </div>
     </div>

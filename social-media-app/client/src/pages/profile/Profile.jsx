@@ -3,7 +3,7 @@ import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 export default function Profile() {
   const params = useParams();
 

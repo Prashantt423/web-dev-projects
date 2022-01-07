@@ -14,12 +14,13 @@ const AuthReducer = (state, action) => {
         error: false,
       };
 
-    case "LOGIN_SFAILURE":
+    case "LOGIN_FAILURE":
       return {
         user: null,
         isFetching: false,
         error: action.payload,
       };
+
     default:
   }
 };
