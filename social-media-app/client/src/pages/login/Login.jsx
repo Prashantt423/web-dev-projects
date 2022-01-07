@@ -1,6 +1,21 @@
 import "./login.css";
-
+import { useRef, useContext } from "react";
+import { loginCall } from "../../apiCalls";
+import { AuthContext } from "../../context/AuthContext";
+import CircularProgress from "@mui/material/CircularProgress";
+import Stack from "@mui/material/Stack";
 export default function Login() {
+  const { isFetching, dispatch } = useContext(AuthContext);
+  const email = useRef();
+  const password = useRef();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    loginCall(
+      { email: email.current.value, password: password.current.value },
+      dispatch
+    );
+  };
+
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -11,15 +26,54 @@ export default function Login() {
           </span>
         </div>
         <div className="loginRight">
-          <div className="loginBox">
-            <input placeholder="Email" className="loginInput" />
-            <input placeholder="Password" className="loginInput" />
-            <button className="loginButton">Log In</button>
+          <form className="loginBox" onSubmit={handleSubmit}>
+            <input
+              placeholder="Email"
+              required
+              type="email"
+              className="loginInput"
+              ref={email}
+            />
+            <input
+              placeholder="Password"
+              type="password"
+              required
+              minLength="6"
+              className="loginInput"
+              ref={password}
+            />
+            <button className="loginButton" disabled={isFetching}>
+              {isFetching ? (
+                <Stack
+                  sx={{
+                    color: "white",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  direction="row"
+                >
+                  <CircularProgress size="30px" color="inherit" />
+                </Stack>
+              ) : (
+                "Log In"
+              )}
+            </button>
             <span className="loginForgot">Forgot Password?</span>
             <button className="loginRegisterButton">
-              Create a New Account
+              <Stack
+                sx={{
+                  color: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                direction="row"
+              >
+                <CircularProgress size="30px" color="inherit" />
+              </Stack>
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>

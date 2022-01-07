@@ -106,9 +106,11 @@ router.get("/timeline/:userId", async (req, res) => {
     }
 });
 // Get timeline posts of any user by USERNAME
-router.get("/timeline/:username", async (req, res) => {
+router.get("/timeline/user/:username", async (req, res) => {
     try {
-    const result = await Post.findAll({"username":req.params.username})
+    const user = await User.findOne({"username":req.params.username})
+    // console.log(user);
+    const result = await Post.find({"userId":user._id})
     res.status(200).json(result);
     } catch (e) {
         res.status(500).json(e)

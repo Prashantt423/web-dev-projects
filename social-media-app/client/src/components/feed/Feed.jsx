@@ -11,7 +11,7 @@ export default function Feed({ username }) {
   useEffect(() => {
     const fetchData = async () => {
       const res = username ?
-      await axios.get(`http://localhost:8800/api/post/timeline/${username}`) :
+      await axios.get(`http://localhost:8800/api/post/timeline/user/${username}`) :
       await axios.get("http://localhost:8800/api/post/feed/61bf68044dd2ec38ead5404e")
       setPosts(res.data)
   
@@ -23,7 +23,9 @@ export default function Feed({ username }) {
       <div className="feedWrapper">
         <Share />
         {posts && posts.map((p) => (
-          <Post key={p._id} post={p} />
+          <Post key={p._id} 
+          username={username}
+          post={p} />
         ))}
       </div>
     </div>

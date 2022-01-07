@@ -4,10 +4,10 @@ import {format} from "timeago.js"
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Post({ post }) {
-  const [like,setLike] = useState(post.likes.length)
+export default function Post(props) {
+  const [like,setLike] = useState(props.post.likes.length)
   const [isLiked,setIsLiked] = useState(false)
-  const date_num = post.createdAt
+  const date_num = props.post.createdAt
 
   const likeHandler =()=>{
     setIsLiked(!isLiked)
@@ -30,7 +30,7 @@ export default function Post({ post }) {
             />
           </Link>
             <span className="postUsername">
-              {post.username && post.username}
+              {props.username &&props.username}
             </span>
             <span className="postDate">{date_num &&format(date_num)}</span>
           </div>
@@ -39,8 +39,8 @@ export default function Post({ post }) {
           </div>
         </div>
         <div className="postCenter">
-          <span className="postText">{post?.desc}</span>
-          <img className="postImg" src={PF+post.img} alt="" />
+          <span className="postText">{props.post?.desc}</span>
+          <img className="postImg" src={PF+props.post.img} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
@@ -49,7 +49,7 @@ export default function Post({ post }) {
             <span className="postLikeCounter">{like} people like it</span>
           </div>
           <div className="postBottomRight">
-            <span className="postCommentText">{post.comment && post.comment} comments</span>
+            <span className="postCommentText">{props.post.comment && props.post.comment} comments</span>
           </div>
         </div>
       </div>
