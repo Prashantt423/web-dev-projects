@@ -33,8 +33,8 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed username={params.username} />
-            <Rightbar profile />
+            <Feed noShareComponent={true} username={params.username} />
+            <Rightbar profile username={params.username} />
           </div>
         </div>
       </div>

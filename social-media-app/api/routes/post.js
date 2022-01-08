@@ -21,6 +21,7 @@ router.post("/", async (req, res) => {
     res.status(500).json(e);
   }
 });
+
 // Update a post
 router.put("/:postId", async (req, res) => {
   try {

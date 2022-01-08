@@ -30,8 +30,12 @@ export default function Post(props) {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to="/profile">
-              <img className="postProfileImg" src={""} alt="" />
+            <Link to={"/profile/" + props.post.username}>
+              <img
+                className="postProfileImg"
+                src={PF + "person/2.jpeg"}
+                alt=""
+              />
             </Link>
             <span className="postUsername">
               {props.username && props.username}
@@ -44,7 +48,11 @@ export default function Post(props) {
         </div>
         <div className="postCenter">
           <span className="postText">{props.post?.desc}</span>
-          <img className="postImg" src={PF + props.post.img} alt="" />
+          <img
+            className="postImg"
+            src={props.post.img ? PF + props.post.img : ""}
+            alt=""
+          />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">

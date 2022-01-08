@@ -8,40 +8,39 @@ import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 
 export default function Share() {
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [file, setFile] = useState(null);
   const desc = useRef();
   const { user } = useContext(AuthContext);
 
-  const hadleSubmit = (e) => {
+  const hadleSubmit = async (e) => {
     e.preventDefault();
     const newPost = {
       userId: user._id,
       desc: desc.current.value,
       username: user.username,
     };
-
-    const doNewPost = async () => {
-      try {
-        console.log(newPost);
-        await axios.post("/post", newPost);
-      } catch (e) {}
-    };
-
     if (file) {
-      const fileName = Date.now() + file.name;
       const data = new FormData();
-      data.append("file", file);
+      const fileName = Date.now() + file.name;
       data.append("name", fileName);
+      data.append("file", file);
       newPost.img = fileName;
+      console.log(newPost);
+      try {
+        await axios.post("/upload", data);
+      } catch (err) {}
     }
-
-    doNewPost();
+    try {
+      await axios.post("/post", newPost);
+      window.location.reload();
+    } catch (err) {}
   };
   return (
     <div className="share">
       <div className="shareWrapper">
         <div className="shareT">
-          <img className="shareProfileImg" src="/assets/person/1.jpeg" alt="" />
+          <img className="shareProfileImg" src={PF + "person/1.jpeg"} alt="" />
           <input
             placeholder={"What's in your mind " + user.username + "?"}
             className="shareInput"
@@ -63,7 +62,9 @@ export default function Share() {
                 type="file"
                 id="file"
                 accept=".png,.jpeg,.jpg"
-                onChange={(e) => setFile(e.target.value[0])}
+                onChange={(e) => {
+                  setFile(e.target.files[0]);
+                }}
               />
             </label>
             <div className="share_option">

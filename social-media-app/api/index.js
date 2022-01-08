@@ -15,8 +15,10 @@ import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use("/images", express.static(path.join(__dirname, "public/images")));
+const _dirname = dirname(fileURLToPath(import.meta.url));
+
+app.use("/images", express.static(path.join(_dirname, "public/images")));
+
 mongoose.connect(
   process.env.MONGO_URL,
   { useNewUrlParser: true, useUnifiedTopology: true },
@@ -36,10 +38,10 @@ app.use("/api/post", postRoute);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/images");
+    cb(null, "public/images/assets");
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    cb(null, req.body.name);
   },
 });
 

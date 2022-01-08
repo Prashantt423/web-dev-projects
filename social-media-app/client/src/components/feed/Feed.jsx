@@ -6,24 +6,28 @@ import "./feed.css";
 import { AuthContext } from "../../context/AuthContext";
 import CircularProgress from "@mui/material/CircularProgress";
 import Stack from "@mui/material/Stack";
-export default function Feed({ username }) {
+export default function Feed(props) {
   const [posts, setPosts] = useState([]);
   const { user } = useContext(AuthContext);
   useEffect(() => {
     const fetchData = async () => {
-      const res = username
+      const res = props.username
         ? await axios.get(
-            `http://localhost:8800/api/post/timeline/user/${username}`
+            `http://localhost:8800/api/post/timeline/user/${props.username}`
           )
         : await axios.get(`http://localhost:8800/api/post/feed/${user._id}`);
-      setPosts(res.data);
+      setPosts(
+        res.data.sort((p1, p2) => {
+          return new Date(p2.createdAt) - new Date(p1.createdAt);
+        })
+      );
     };
     fetchData();
-  }, [username, user._id]);
+  }, [props.username, user._id]);
   return (
     <div className="feed">
       <div className="feedWrapper">
-        <Share />
+        {props.noShareComponent ? "" : <Share />}
         {posts ? (
           posts.map((p) => <Post key={p._id} username={p.username} post={p} />)
         ) : (
