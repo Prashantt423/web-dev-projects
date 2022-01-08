@@ -1,7 +1,27 @@
 import "./rightbar.css";
 import Online from "../online/Online";
 
-export default function Rightbar({ profile }) {
+import axios from "axios";
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import { AuthContext } from "../../context/AuthContext";
+export default function Rightbar(props) {
+  const { user: currentUser } = useContext(AuthContext);
+  const [friends, setFriends] = useState(null);
+  useEffect(() => {
+    const fetchFriends = async () => {
+      const data = props.username
+        ? await axios.get(
+            `http://localhost:8800/api/user/friends/${props.username}`
+          )
+        : "";
+      setFriends(data.data);
+    };
+
+    fetchFriends();
+  }, [props.username]);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const HomeRightbar = () => {
     return (
@@ -21,9 +41,45 @@ export default function Rightbar({ profile }) {
     );
   };
 
-  const ProfileRightbar = () => {
+  const ProfileRightbar = (prop) => {
+    const [isFollowing, setIsFollowing] = useState(false);
+    useEffect(() => {
+      const fetchUserId = async () => {
+        try {
+          const user = await axios.get(
+            `http://localhost:8800/api/user/profile/${prop.username}`
+          );
+
+          if (user.data) {
+            user.data.followers.forEach((f) => {
+              if (f === currentUser._id) {
+                setIsFollowing(true);
+              }
+            });
+          }
+        } catch (e) {}
+      };
+      fetchUserId();
+    }, [prop.username]);
+
+    const handleFollow = () => {};
     return (
       <>
+        <div>
+          {prop.username !== currentUser.username ? (
+            isFollowing ? (
+              <button className="rightBarFollowButton" onClick={handleFollow}>
+                Following
+              </button>
+            ) : (
+              <button className="rightBarFollowButton" onClick={handleFollow}>
+                Follow <AddIcon />
+              </button>
+            )
+          ) : (
+            ""
+          )}
+        </div>
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
@@ -41,54 +97,24 @@ export default function Rightbar({ profile }) {
         </div>
         <h4 className="rightbarTitle">User friends</h4>
         <div className="rightbarFollowings">
-          <div className="rightbarFollowing">
-            <img
-              src={PF + "/person/1.jpeg"}
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src={PF + "/person/2.jpeg"}
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src={PF + "/person/3.jpeg"}
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src={PF + "/person/4.jpeg"}
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src={PF + "/person/5.jpeg"}
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src={PF + "/person/6.jpeg"}
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
+          {friends &&
+            friends.map((frnd, i) => (
+              <Link key={i} to={"/profile/" + frnd.username}>
+                <div className="rightbarFollowing">
+                  <img
+                    src={PF + "/person/1.jpeg"}
+                    alt=""
+                    className="rightbarFollowingImg"
+                  />
+                  <span
+                    className="rightbarFollowingName"
+                    style={{ textAlign: "center" }}
+                  >
+                    {frnd.username}
+                  </span>
+                </div>
+              </Link>
+            ))}
         </div>
       </>
     );
@@ -96,7 +122,11 @@ export default function Rightbar({ profile }) {
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-        {profile ? <ProfileRightbar /> : <HomeRightbar />}
+        {props.profile ? (
+          <ProfileRightbar username={props.username} />
+        ) : (
+          <HomeRightbar />
+        )}
       </div>
     </div>
   );
