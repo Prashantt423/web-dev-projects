@@ -12,17 +12,25 @@ export default function Post(props) {
   const [like, setLike] = useState(props.post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const date_num = props.post.createdAt;
-  const { user } = useContext(AuthContext);
-
+  const { user: currentUser } = useContext(AuthContext);
+  const [user, setUser] = useState(null);
   useEffect(() => {
-    setIsLiked(props.post.likes.includes(user._id));
-  }, [props.post.likes, user._id]);
+    setIsLiked(props.post.likes.includes(currentUser._id));
+  }, [props.post.likes, currentUser._id]);
   const likeHandler = () => {
-    axios.put("/post/" + props.post._id + "/like", { userId: user._id });
+    axios.put("/post/" + props.post._id + "/like", { userId: currentUser._id });
     setIsLiked(!isLiked);
 
     setLike((like) => (isLiked ? like - 1 : like + 1));
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`/user?userId=${props.post.userId}`);
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [props.post.userId]);
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
@@ -33,7 +41,11 @@ export default function Post(props) {
             <Link to={"/profile/" + props.post.username}>
               <img
                 className="postProfileImg"
-                src={PF + "person/2.jpeg"}
+                src={
+                  user && user.profilePicture
+                    ? PF + user.profilePicture
+                    : PF + "person/noAvatar.png"
+                }
                 alt=""
               />
             </Link>

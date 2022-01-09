@@ -8,20 +8,54 @@ import { useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { AuthContext } from "../../context/AuthContext";
 export default function Rightbar(props) {
-  const { user: currentUser } = useContext(AuthContext);
+  const { user: currentUser, dispatch } = useContext(AuthContext);
   const [friends, setFriends] = useState(null);
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  async function handleClick() {
+    try {
+      if (isFollowing) {
+        await axios.put(
+          `http://localhost:8800/api/user/${props.user?._id}/unfollow`,
+          {
+            userId: currentUser._id,
+          }
+        );
+        dispatch({ type: "UNFOLLOW", payload: props.user._id });
+      } else {
+        await axios.put(
+          `http://localhost:8800/api/user/${props.user?._id}/follow`,
+          {
+            userId: currentUser._id,
+          }
+        );
+        dispatch({ type: "FOLLOW", payload: props.user._id });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+
+    setIsFollowing(!isFollowing);
+  }
+
+  useEffect(() => {
+    if (props.user && props.user.followers.includes(currentUser._id)) {
+      setIsFollowing(true);
+    }
+  }, [currentUser._id, props.user]);
+
   useEffect(() => {
     const fetchFriends = async () => {
-      const data = props.username
+      const res = props.user
         ? await axios.get(
-            `http://localhost:8800/api/user/friends/${props.username}`
+            `http://localhost:8800/api/user/friends/${props.user.username}`
           )
         : "";
-      setFriends(data.data);
+      setFriends(res.data);
     };
 
     fetchFriends();
-  }, [props.username]);
+  }, [props.user]);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const HomeRightbar = () => {
     return (
@@ -41,45 +75,20 @@ export default function Rightbar(props) {
     );
   };
 
-  const ProfileRightbar = (prop) => {
-    const [isFollowing, setIsFollowing] = useState(false);
-    useEffect(() => {
-      const fetchUserId = async () => {
-        try {
-          const user = await axios.get(
-            `http://localhost:8800/api/user/profile/${prop.username}`
-          );
-
-          if (user.data) {
-            user.data.followers.forEach((f) => {
-              if (f === currentUser._id) {
-                setIsFollowing(true);
-              }
-            });
-          }
-        } catch (e) {}
-      };
-      fetchUserId();
-    }, [prop.username]);
-
-    const handleFollow = () => {};
+  const ProfileRightbar = () => {
     return (
       <>
-        <div>
-          {prop.username !== currentUser.username ? (
-            isFollowing ? (
-              <button className="rightBarFollowButton" onClick={handleFollow}>
-                Following
-              </button>
-            ) : (
-              <button className="rightBarFollowButton" onClick={handleFollow}>
-                Follow <AddIcon />
-              </button>
-            )
+        {currentUser.username !== props.user.username &&
+          (isFollowing ? (
+            <div onClick={handleClick} className="rightBarFollowButton">
+              Following
+            </div>
           ) : (
-            ""
-          )}
-        </div>
+            <div onClick={handleClick} className="rightBarFollowButton">
+              Follow <AddIcon />
+            </div>
+          ))}
+        <div></div>
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
@@ -98,23 +107,29 @@ export default function Rightbar(props) {
         <h4 className="rightbarTitle">User friends</h4>
         <div className="rightbarFollowings">
           {friends &&
-            friends.map((frnd, i) => (
-              <Link key={i} to={"/profile/" + frnd.username}>
-                <div className="rightbarFollowing">
-                  <img
-                    src={PF + "/person/1.jpeg"}
-                    alt=""
-                    className="rightbarFollowingImg"
-                  />
-                  <span
-                    className="rightbarFollowingName"
-                    style={{ textAlign: "center" }}
-                  >
-                    {frnd.username}
-                  </span>
-                </div>
-              </Link>
-            ))}
+            friends.map((frnd, i) => {
+              if (frnd) {
+                return (
+                  <Link key={i} to={"/profile/" + frnd ? frnd.username : ""}>
+                    <div className="rightbarFollowing">
+                      <img
+                        src={PF + "/person/1.jpeg"}
+                        alt=""
+                        className="rightbarFollowingImg"
+                      />
+                      <span
+                        className="rightbarFollowingName"
+                        style={{ textAlign: "center" }}
+                      >
+                        {frnd.username}
+                      </span>
+                    </div>
+                  </Link>
+                );
+              } else {
+                return "";
+              }
+            })}
         </div>
       </>
     );
@@ -122,11 +137,7 @@ export default function Rightbar(props) {
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-        {props.profile ? (
-          <ProfileRightbar username={props.username} />
-        ) : (
-          <HomeRightbar />
-        )}
+        {props.profile ? <ProfileRightbar /> : <HomeRightbar />}
       </div>
     </div>
   );

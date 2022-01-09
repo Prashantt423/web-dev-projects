@@ -6,7 +6,7 @@ import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
-
+import ClearIcon from "@mui/icons-material/Clear";
 export default function Share() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [file, setFile] = useState(null);
@@ -48,6 +48,15 @@ export default function Share() {
           />
         </div>
         <hr className="shareHr" />
+        {file && (
+          <div className="shareImgContainer">
+            <img className="shareImg" src={URL.createObjectURL(file)} alt="" />
+            <ClearIcon
+              className="shareCancelImg"
+              onClick={() => setFile(null)}
+            />
+          </div>
+        )}
         <div className="bLower">
           <form
             className="share_options"

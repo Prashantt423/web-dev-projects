@@ -107,15 +107,17 @@ router.delete("/:id", async (req, res) => {
 });
 
 //GET user
-router.get("/:id", async (req, res) => {
+router.get("/", async (req, res) => {
+  const userId = req.query.userId;
+  const username = req.query.username;
   try {
-    const user = await User.findById(req.params.id);
-
-    //  destructuring neccessary data
-    const { updatedAt, password, ...others } = user._doc;
-    res.status(200).json(others);
-  } catch (e) {
-    res.status(500).json(e);
+    const user = userId
+      ? await User.findById(userId)
+      : await User.findOne({ username: username });
+    const { password, updatedAt, ...other } = user._doc;
+    res.status(200).json(other);
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
@@ -128,15 +130,15 @@ router.put("/:id/follow", async (req, res) => {
       if (user) {
         try {
           if (
-            !user.followers.includes(req.params.id) &&
-            !curUser.following.includes(req.body.userId)
+            !user.following.includes(req.params.id) &&
+            !curUser.followers.includes(req.body.userId)
           ) {
             await User.findByIdAndUpdate(req.params.id, {
-              $push: { following: req.body.userId },
+              $push: { followers: req.body.userId },
             });
 
             await User.findByIdAndUpdate(req.body.userId, {
-              $push: { followers: req.params.id },
+              $push: { following: req.params.id },
             });
 
             res.status(200).json("Followed successfully!");
@@ -165,15 +167,15 @@ router.put("/:id/unfollow", async (req, res) => {
       if (user) {
         try {
           if (
-            user.followers.includes(req.params.id) &&
-            curUser.following.includes(req.body.userId)
+            user.following.includes(req.params.id) &&
+            curUser.followers.includes(req.body.userId)
           ) {
             await User.findByIdAndUpdate(req.params.id, {
-              $pull: { following: req.body.userId },
+              $pull: { followers: req.body.userId },
             });
 
             await User.findByIdAndUpdate(req.body.userId, {
-              $pull: { followers: req.params.id },
+              $pull: { following: req.params.id },
             });
 
             res.status(200).json("Unfollowed successfully!");
