@@ -46,12 +46,16 @@ export default function Rightbar(props) {
 
   useEffect(() => {
     const fetchFriends = async () => {
-      const res = props.user
-        ? await axios.get(
-            `http://localhost:8800/api/user/friends/${props.user.username}`
-          )
-        : "";
-      setFriends(res.data);
+      try {
+        const res = props.user
+          ? await axios.post(
+              `http://localhost:8800/api/user/friends?username=${props.user.username}`
+            )
+          : "";
+        setFriends(res.data);
+      } catch (e) {
+        console.log(e);
+      }
     };
 
     fetchFriends();

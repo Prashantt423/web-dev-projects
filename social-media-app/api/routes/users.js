@@ -38,41 +38,17 @@ router.get("/profile/:username", async (req, res) => {
 });
 // GET FRIENDS LIST
 router.post("/friends", async (req, res) => {
+  const userId = req.query.userid;
+  const userName = req.query.username;
   try {
-    const user = await User.findById(req.body.userId);
+    const user = userId
+      ? await User.findById(userId)
+      : await User.findOne({ username: userName });
     if (user) {
       const frndList = [...user.followers];
       const following = [...user.following];
       following.forEach((f) => {
-        if (!following.includes(f) && f !== user._id) {
-          frndList.push(f);
-        }
-      });
-
-      const friends = await Promise.all(
-        frndList.map(async (f) => {
-          return await User.findById(f);
-        })
-      );
-
-      res.status(200).json(friends);
-    } else {
-      res.status(404).json("User Not Found");
-    }
-  } catch (e) {
-    res.status(500).json(e);
-  }
-});
-
-// GET FRIEND LIST OF USER
-router.get("/friends/:username", async (req, res) => {
-  try {
-    const user = await User.findOne({ username: req.params.username });
-    if (user) {
-      const frndList = [...user.followers];
-      const following = [...user.following];
-      following.forEach((f) => {
-        if (!following.includes(f) && f !== user._id) {
+        if (!frndList.includes(f) && f !== user._id) {
           frndList.push(f);
         }
       });
