@@ -1,0 +1,73 @@
+.messenger {
+  width: 100%;
+  height: calc(100vh - 50px);
+  display: flex;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.chatMenu {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.chatBox {
+  flex: 3;
+  overflow-y: scroll;
+  height: 100vh;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.chatBox::-webkit-scrollbar {
+  display: none;
+}
+.chatMenu::-webkit-scrollbar {
+  display: none;
+}
+.chatOnline::-webkit-scrollbar {
+  display: none;
+}
+.chatOnline {
+  flex: 1;
+  overflow-y: scroll;
+  padding: 30px;
+}
+
+.chatMenu > input {
+  margin: 20px 2px 20px 10px;
+  width: 90%;
+  border: none;
+  border-bottom: 1px solid grey;
+  padding-bottom: 6px;
+}
+.searchInputBox:focus {
+  outline: none;
+}
+
+.chats {
+  margin: 10px 0 10px 20px;
+  display: flex;
+  align-items: center;
+  /* background: whitesmoke; */
+}
+.chats:hover {
+  cursor: pointer;
+}
+.chats > span {
+  margin-left: 10px;
+  font-weight: 500;
+}
+
+.chatsImg {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 5px;
+  border: 1px solid grey;
+}

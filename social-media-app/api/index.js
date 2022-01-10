@@ -9,6 +9,8 @@ import helmet from "helmet";
 import userRoute from "./routes/users.js";
 import authRoute from "./routes/auth.js";
 import postRoute from "./routes/post.js";
+import conversationRoute from "./routes/conversations.js";
+import messageRoute from "./routes/messages.js";
 dotenv.config();
 import multer from "multer";
 import path from "path";
@@ -35,6 +37,8 @@ app.use(morgan("common"));
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/post", postRoute);
+app.use("/api/conversation", conversationRoute);
+app.use("/api/messages", messageRoute);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

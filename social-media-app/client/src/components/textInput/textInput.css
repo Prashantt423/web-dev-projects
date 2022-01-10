@@ -1,0 +1,26 @@
+.textWriterInput {
+  width: 92%;
+  display: flex;
+  border: none;
+  outline: none;
+  scroll-behavior: revert;
+  padding: 30px 80px 30px 30px;
+  height: 60px;
+  line-height: 1rem;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  border-radius: 20px;
+  border: 2px solid green;
+}
+.textWriterInput::-webkit-scrollbar {
+  display: none;
+}
+.messegeWritingBox {
+  position: fixed;
+  bottom: 0;
+  z-index: 55;
+  background-color: #fff;
+  border: none;
+  padding: 20px;
+  width: 50vw;
+}
