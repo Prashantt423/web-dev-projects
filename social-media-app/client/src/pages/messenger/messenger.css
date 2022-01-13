@@ -1,13 +1,14 @@
 .messenger {
   width: 100%;
-  height: calc(100vh - 50px);
+  height: 91vh;
   display: flex;
-  overflow-y: scroll;
+  overflow-y: hidden;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
 
 .chatMenu {
+  padding-top: 50px;
   flex: 1.5;
   display: flex;
   flex-direction: column;
@@ -17,8 +18,9 @@
   scrollbar-width: none; /* Firefox */
 }
 .chatBox {
+  position: relative;
   flex: 3;
-  overflow-y: scroll;
+  overflow: hidden;
   height: 100vh;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */

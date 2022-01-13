@@ -12,10 +12,8 @@ export default function Feed(props) {
   useEffect(() => {
     const fetchData = async () => {
       const res = props.username
-        ? await axios.get(
-            `http://localhost:8800/api/post/timeline/user/${props.username}`
-          )
-        : await axios.get(`http://localhost:8800/api/post/feed/${user._id}`);
+        ? await axios.get(`/post/timeline/user/${props.username}`)
+        : await axios.get(`/post/feed/${user._id}`);
       setPosts(
         res.data.sort((p1, p2) => {
           return new Date(p2.createdAt) - new Date(p1.createdAt);
